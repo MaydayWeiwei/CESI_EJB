@@ -8,48 +8,48 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import eu.telecom_bretagne.CESI.data.model.Departement;
+import eu.telecom_bretagne.CESI.data.model.Service;
 
 /**
  * Session Bean implementation class DepartementDAO
  */
 @Stateless
 @LocalBean
-public class DepartementDAO implements DAO<Departement> {
+public class ServiceDAO implements DAO<Service> {
 	@PersistenceContext
 	EntityManager entityManager;
 
 	/**
 	 * Default constructor.
 	 */
-	public DepartementDAO() {
+	public ServiceDAO() {
 	}
 
 	@Override
-	public Departement create(Departement entity) {
+	public Service create(Service entity) {
 		entityManager.persist(entity);
 		return entity;
 	}
 
 	@Override
-	public Departement findById(int id) {
-		return entityManager.find(Departement.class, id);
+	public Service findById(int id) {
+		return entityManager.find(Service.class, id);
 	}
 
 	@Override
-	public Departement update(Departement entity) {
+	public Service update(Service entity) {
 		return entity; // no-op.
 	}
 
 	@Override
-	public void delete(Departement entity) {
+	public void delete(Service entity) {
 		entityManager.remove(entity);
 	}
 
-	public List<Departement> findAll() {
+	public List<Service> findAll() {
 		Query query = entityManager
-				.createQuery("select departement from Departement departement");
-				return (List<Departement>) query.getResultList();
+				.createQuery("select service from Service service");
+				return (List<Service>) query.getResultList();
 
 	}
 }
