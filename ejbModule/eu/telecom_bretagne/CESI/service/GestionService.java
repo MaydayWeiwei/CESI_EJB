@@ -46,6 +46,7 @@ public class GestionService implements IGestionService {
 		Service service = new Service();
 		service.setNom(nomService);
 		service.setResponsableFk(responsableId);
+		service.addEmploye(employe);
 		serviceDAO.create(service);
 		employeDAO.update(employe);
 		return service;
@@ -58,6 +59,7 @@ public class GestionService implements IGestionService {
 		Service service = new Service();
 		service.setNom(nomService);
 		service.setResponsableFk(responsableId);
+		service.addEmploye(employe);
 		serviceRattache.addService(service);
 		serviceDAO.create(service);
 		employeDAO.update(employe);
