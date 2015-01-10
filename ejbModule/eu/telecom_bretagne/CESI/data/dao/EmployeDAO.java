@@ -43,7 +43,6 @@ public class EmployeDAO implements DAO<Employe> {
 
 	@Override
 	public void delete(Employe entity) {
-		entityManager.remove(entity);
 	}
 
 	public List<Employe> findAll() {

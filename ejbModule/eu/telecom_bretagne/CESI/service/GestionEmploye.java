@@ -40,46 +40,18 @@ public class GestionEmploye implements IGestionEmploye {
 		return employeDAO.findById(identifiant);
 	}
 
-	@Override
-	public void modifierEmploye(int identifiant, String nouveauNom) {
-		Employe employe = lireEmploye(identifiant);
-		employe.setNom(nouveauNom);
-	}
 
 	@Override
-	public void modifierEmploye(int identifiant, String nouveauNom,
-			int departement_id) {
-		Service service = serviceDAO.findById(departement_id);
-		Employe employe = this.lireEmploye(identifiant);
-		Service old_departement = employe.getService();
-		employe.setNom(nouveauNom);
-		old_departement.getEmployes().remove(employe);
-		employe.setService(service);
-		service.getEmployes().add(employe);
-		employeDAO.update(employe);
-		serviceDAO.update(old_departement);
-		serviceDAO.update(service);
-	}
-
-	@Override
-	public Employe creerEmploye(String nouveauNom, int departement_id) {
-		Service service = serviceDAO.findById(departement_id);
+	public Employe creerEmploye(String nom, String prenom, int serviceId) {
+		Service service = serviceDAO.findById(serviceId);
 		Employe employe = new Employe();
-		employe.setNom(nouveauNom);
+		employe.setNom(nom);
+		employe.setPrenom(prenom);
 		employe.setService(service);
 		service.getEmployes().add(employe);
 		employeDAO.create(employe);
 		serviceDAO.update(service);
 		return employe;
-	}
-
-	@Override
-	public void supprimerEmploye(int identifiant) {
-		Employe employe = employeDAO.findById(identifiant);
-		Service service_employe = employe.getService();
-		service_employe.getEmployes().remove(employe);
-		employeDAO.delete(employe);
-		serviceDAO.update(service_employe);
 	}
 
 }
