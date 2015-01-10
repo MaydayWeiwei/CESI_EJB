@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -37,6 +38,18 @@ public class ServiceDAO implements DAO<Service> {
 	}
 
 	@Override
+	public Service findByName(String name) {
+		Query query = entityManager
+				.createQuery("select service from Service service where service.nom= :nom");
+		query.setParameter("nom", name);
+		try{
+			return (Service) query.getSingleResult();
+		}catch(NoResultException e){
+			return null;
+		}
+	}
+
+	@Override
 	public Service update(Service entity) {
 		return entity; // no-op.
 	}
@@ -49,7 +62,7 @@ public class ServiceDAO implements DAO<Service> {
 	public List<Service> findAll() {
 		Query query = entityManager
 				.createQuery("select service from Service service");
-				return (List<Service>) query.getResultList();
+		return (List<Service>) query.getResultList();
 
 	}
 }

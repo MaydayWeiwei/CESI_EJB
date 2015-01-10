@@ -19,7 +19,7 @@ import eu.telecom_bretagne.CESI.data.model.Service;
 public class GestionService implements IGestionService {
 	@EJB
 	ServiceDAO serviceDAO;
-	
+
 	@EJB
 	EmployeDAO employeDAO;
 
@@ -42,29 +42,36 @@ public class GestionService implements IGestionService {
 
 	@Override
 	public Service creerService(String nomService, int responsableId) {
-		Employe employe = employeDAO.findById(responsableId);
-		Service service = new Service();
-		service.setNom(nomService);
-		service.setResponsableFk(responsableId);
-		service.addEmploye(employe);
-		serviceDAO.create(service);
-		employeDAO.update(employe);
-		return service;
+		if (serviceDAO.findByName(nomService) == null) {
+			Employe employe = employeDAO.findById(responsableId);
+			Service service = new Service();
+			service.setNom(nomService);
+			service.setResponsableFk(responsableId);
+			service.addEmploye(employe);
+			serviceDAO.create(service);
+			employeDAO.update(employe);
+			return service;
+		}
+		return null;
 	}
-	
+
 	@Override
-	public Service creerService(String nomService, int responsableId, int serviceRattacheId) {
-		Employe employe = employeDAO.findById(responsableId);
-		Service serviceRattache = serviceDAO.findById(serviceRattacheId);
-		Service service = new Service();
-		service.setNom(nomService);
-		service.setResponsableFk(responsableId);
-		service.addEmploye(employe);
-		serviceRattache.addService(service);
-		serviceDAO.create(service);
-		employeDAO.update(employe);
-		serviceDAO.update(serviceRattache);
-		return service;
+	public Service creerService(String nomService, int responsableId,
+			int serviceRattacheId) {
+		if (serviceDAO.findByName(nomService) == null) {
+			Employe employe = employeDAO.findById(responsableId);
+			Service serviceRattache = serviceDAO.findById(serviceRattacheId);
+			Service service = new Service();
+			service.setNom(nomService);
+			service.setResponsableFk(responsableId);
+			service.addEmploye(employe);
+			serviceRattache.addService(service);
+			serviceDAO.create(service);
+			employeDAO.update(employe);
+			serviceDAO.update(serviceRattache);
+			return service;
+		}
+		return null;
 	}
 
 }

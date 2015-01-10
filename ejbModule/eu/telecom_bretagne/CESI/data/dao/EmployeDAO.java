@@ -52,4 +52,10 @@ public class EmployeDAO implements DAO<Employe> {
 
 	}
 
+	@Override
+	public Employe findByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
