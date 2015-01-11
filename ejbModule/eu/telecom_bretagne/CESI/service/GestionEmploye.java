@@ -1,5 +1,6 @@
 package eu.telecom_bretagne.CESI.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -42,12 +43,15 @@ public class GestionEmploye implements IGestionEmploye {
 
 
 	@Override
-	public Employe creerEmploye(String nom, String prenom, int serviceId) {
+	public Employe creerEmploye(String nom, String prenom, int serviceId, String statut, Date date_debut, Date date_fin) {
 		Service service = serviceDAO.findById(serviceId);
 		Employe employe = new Employe();
 		employe.setNom(nom);
 		employe.setPrenom(prenom);
 		employe.setService(service);
+		employe.setStatut(statut);
+		employe.setDateDebut(date_debut);
+		employe.setDateFin(date_fin);
 		service.getEmployes().add(employe);
 		employeDAO.create(employe);
 		serviceDAO.update(service);
